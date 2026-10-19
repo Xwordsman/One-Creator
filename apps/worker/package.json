@@ -1,0 +1,9 @@
+{
+  "name": "@one-creator/worker",
+  "version": "0.1.0-alpha.1",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "@one-creator/server": "*"
+  }
+}

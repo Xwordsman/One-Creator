@@ -1,0 +1,21 @@
+{
+  "name": "@one-creator/server",
+  "version": "0.1.0-alpha.1",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "./*": "./src/*.ts"
+  },
+  "dependencies": {
+    "@mozilla/readability": "0.6.0",
+    "@electric-sql/pglite": "0.5.10",
+    "@one-creator/core": "*",
+    "@one-creator/rendering": "*",
+    "dotenv": "17.4.2",
+    "fflate": "0.8.3",
+    "fast-xml-parser": "5.11.2",
+    "linkedom": "0.18.13",
+    "pg": "8.23.1",
+    "zod": "4.6.7"
+  }
+}

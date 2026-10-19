@@ -1,0 +1,11 @@
+{
+  "name": "@one-creator/media-service",
+  "version": "0.1.0-alpha.1",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "fastify": "5.12.7",
+    "@fastify/multipart": "9.4.0",
+    "zod": "4.6.7"
+  }
+}

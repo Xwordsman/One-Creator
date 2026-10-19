@@ -1,0 +1,57 @@
+{
+  "name": "one-creator",
+  "version": "0.1.0-alpha.1",
+  "private": true,
+  "type": "module",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Xwordsman/One-Creator.git"
+  },
+  "homepage": "https://github.com/Xwordsman/One-Creator#readme",
+  "bugs": {
+    "url": "https://github.com/Xwordsman/One-Creator/issues"
+  },
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "concurrently -k -n api,web \"npm:dev:api\" \"npm:dev:web\"",
+    "dev:api": "tsx watch apps/api/src/main.ts",
+    "dev:web": "vite --config apps/web/vite.config.ts",
+    "build": "node scripts/build.mjs",
+    "start": "node apps/api/dist/main.mjs",
+    "worker": "tsx apps/worker/src/main.ts",
+    "executor": "tsx apps/executor/src/main.ts",
+    "media": "tsx apps/media-service/src/main.ts",
+    "check": "tsc --noEmit",
+    "format": "prettier --write \"apps/**/*.{ts,tsx,css,json,html}\" \"packages/**/*.{ts,json}\" \"scripts/**/*.{ts,mjs}\" \"tests/**/*.ts\" \"*.{json,ts}\"",
+    "format:check": "prettier --check \"apps/**/*.{ts,tsx,css,json,html}\" \"packages/**/*.{ts,json}\" \"scripts/**/*.{ts,mjs}\" \"tests/**/*.ts\" \"*.{json,ts}\"",
+    "test": "vitest run",
+    "test:e2e": "playwright test",
+    "backup": "tsx apps/api/src/backup.ts",
+    "benchmark": "tsx scripts/benchmark.ts",
+    "setup:docker": "node scripts/setup-docker.mjs"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.64.1",
+    "@types/markdown-it": "14.2.0",
+    "@types/node": "24.19.2",
+    "@types/pg": "8.23.1",
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
+    "concurrently": "9.2.5",
+    "esbuild": "0.28.2",
+    "ffmpeg-static": "5.3.0",
+    "ffprobe-static": "3.1.0",
+    "prettier": "3.9.10",
+    "tsx": "4.23.15",
+    "typescript": "5.9.3",
+    "vite": "8.3.4",
+    "vitest": "3.2.7"
+  }
+}

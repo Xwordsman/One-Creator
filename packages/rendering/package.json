@@ -1,0 +1,10 @@
+{
+  "name": "@one-creator/rendering",
+  "version": "0.1.0-alpha.1",
+  "private": true,
+  "type": "module",
+  "exports": "./src/index.ts",
+  "dependencies": {
+    "markdown-it": "14.3.3"
+  }
+}

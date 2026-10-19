@@ -1,0 +1,91 @@
+name: one-creator
+
+x-app: &app
+  image: one-creator:local
+  build:
+    context: ..
+    dockerfile: deploy/Dockerfile
+  environment: &environment
+    NODE_ENV: production
+    HOST: 0.0.0.0
+    PORT: 3001
+    DATA_DIR: /data
+    DATABASE_URL: postgresql://one_creator:${POSTGRES_PASSWORD:?Run npm run setup:docker}@postgres:5432/one_creator
+    ENCRYPTION_KEY: ${ENCRYPTION_KEY:?Run npm run setup:docker}
+    APP_ORIGIN: ${APP_ORIGIN:-http://localhost:8080}
+    COOKIE_SECURE: ${COOKIE_SECURE:-false}
+    WORKER_MODE: external
+  volumes:
+    - creator-data:/data
+  depends_on:
+    postgres:
+      condition: service_healthy
+  restart: unless-stopped
+  init: true
+
+services:
+  app:
+    <<: *app
+    ports:
+      - "${HOST_PORT:-8080}:3001"
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://127.0.0.1:3001/api/health').then(r=>{if(!r.ok)process.exit(1)}).catch(()=>process.exit(1))"]
+      interval: 20s
+      timeout: 5s
+      start_period: 30s
+      retries: 5
+  worker:
+    <<: *app
+    command: ["node", "apps/worker/dist/main.mjs"]
+  # Optional FFmpeg service: docker compose --profile media up -d
+  # Then configure the "视频合成" service in Settings: base URL http://media:4100/v1, API key = MEDIA_SERVICE_TOKEN.
+  media:
+    profiles: ["media"]
+    image: one-creator-media:local
+    build:
+      context: ..
+      dockerfile: deploy/Dockerfile
+      target: media
+    environment:
+      # Compose interpolates every service, enabled or not; the service itself rejects a missing or short token.
+      MEDIA_SERVICE_TOKEN: ${MEDIA_SERVICE_TOKEN:-}
+    volumes:
+      - media-data:/data
+    restart: unless-stopped
+    init: true
+  # Optional browser execution node. Prefer running it on your own computer; register it in 成员与集成 · 执行节点 first.
+  executor:
+    profiles: ["executor"]
+    image: one-creator-executor:local
+    build:
+      context: ..
+      dockerfile: deploy/Dockerfile
+      target: executor
+    environment:
+      EXECUTOR_SERVER: ${EXECUTOR_SERVER:-http://app:3001}
+      EXECUTOR_TOKEN: ${EXECUTOR_TOKEN:-}
+    volumes:
+      - executor-data:/data
+    shm_size: "1gb"
+    restart: unless-stopped
+    init: true
+  postgres:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_USER: one_creator
+      POSTGRES_DB: one_creator
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Run npm run setup:docker}
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U one_creator -d one_creator"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    restart: unless-stopped
+
+volumes:
+  postgres-data:
+  creator-data:
+  media-data:
+  executor-data:

@@ -1,0 +1,12 @@
+{
+  "name": "@one-creator/executor",
+  "version": "0.1.0-alpha.1",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "@one-creator/core": "*",
+    "@one-creator/rendering": "*",
+    "@one-creator/server": "*",
+    "playwright-core": "1.64.1"
+  }
+}
