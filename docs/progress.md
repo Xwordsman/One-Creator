@@ -273,6 +273,7 @@ v0.1 验收场景的本地状态：
 - 验证环境：Windows、Node 24.18、PGlite 0.5.10、Playwright Chromium 1248、ffmpeg-static 5.3.0 / ffprobe-static 3.1.0；模型、图片、向量、转写、语音、公众号与浏览器平台均为 loopback 模拟服务或本地页面，没有访问真实平台账号。
 - 验证证据：
   - `npm run check`、`npm run format:check`、`npm run build` 通过；`npm test` 14 个文件 129 项通过；`npm run test:e2e` 3 个流程通过（57.8 秒）。
+  - 同一组检查、129 项单元测试与 3 个浏览器流程在 GitHub Actions 的 Ubuntu / Node.js 24 环境通过（CI 运行 #4，2026-10-23）。
   - `publication.test.ts`（7）：正式发布的提交 / 发布分离、回执丢失后只按成功列表认领、作者确认后重发、平台失败可重试；统计同步的缺失值与权限不足；调度只派发一次、改期产生新版本、过期等待、定时发布先存草稿、取消停止排队、账号租约串行与隔离。
   - `nodes.test.ts`（7）：节点注册与令牌、登录画面仅管理员可见且不入素材库、远程指令、身份确认、素材只按任务交付、不确定回执禁止重发、掉线进入待核对、迟到结果被拒、不能开始的任务不阻塞队列、令牌轮换 / 撤销；真实执行器子进程经 HTTP 领取任务；真实 Chromium 在本地模拟页面完成扫码、核对账号、只提交一次和唯一条目核验。
   - `integrations.test.ts`（16）、`discovery.test.ts`（13）、`media-automation.test.ts`（13）、`studio-ai.test.ts`（28）、`access.test.ts`（5）、`media-service.test.ts`（1，真实 FFmpeg）。

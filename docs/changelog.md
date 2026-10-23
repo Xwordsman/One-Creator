@@ -9,7 +9,7 @@
 - 用户确认 `DEC-08`：项目以 MIT 许可证开源。
 - 用户确认 `DEC-14`：`PUB-10` 批次为知乎专栏文章、百家号图文、B 站视频投稿。三个平台仍需真实账号实测，`PUB-10` 保持 `VERIFY`。
 - 公开仓库地址：<https://github.com/Xwordsman/One-Creator>；README 与 `package.json` 补充仓库地址和克隆步骤。
-- 新增 GitHub Actions 检查：Ubuntu / Node.js 24 上运行类型检查、格式检查、单元测试、构建与浏览器端到端流程。
+- 新增 GitHub Actions 检查：Ubuntu / Node.js 24 上运行类型检查、格式检查、单元测试、构建与浏览器端到端流程；运行 #4 全部通过。
 - 新增 [v0.1.0-alpha.1 发布说明](releases/v0.1.0-alpha.1.md)。
 
 ## 2026-10-18 · doc-0.4 · v0.2 / v0.3 全部需求实现
