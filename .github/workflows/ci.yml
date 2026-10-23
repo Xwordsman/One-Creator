@@ -49,7 +49,8 @@ jobs:
       - name: 运行浏览器端到端流程
         run: |
           set -o pipefail
-          npm run test:e2e 2>&1 | tee e2e.log
+          # The github reporter turns each failure into a public annotation with file, line and error.
+          npx playwright test --reporter=github,line 2>&1 | tee e2e.log
       # Workflow logs need a signed-in account; the step summary is public and carries the failure text.
       - if: failure()
         name: 输出失败摘要
