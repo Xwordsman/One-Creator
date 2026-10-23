@@ -1,10 +1,12 @@
 # One-Creator
 
+[![CI](https://github.com/Xwordsman/One-Creator/actions/workflows/ci.yml/badge.svg)](https://github.com/Xwordsman/One-Creator/actions/workflows/ci.yml)
+
 **把灵感，写成自己的作品。**
 
 One-Creator 是一个面向个人创作者、可自部署的 AI 自媒体工作台。围绕账号与人设，管理灵感、素材、母稿、多平台版本和发布记录。
 
-当前版本：`0.1.0-alpha.1`。产品全景与实现状态见 [项目文档](docs/README.md) 和 [开发进度](docs/progress.md)。
+当前版本：`0.1.0-alpha.1`，见 [发布说明](docs/releases/v0.1.0-alpha.1.md)。产品全景与实现状态见 [项目文档](docs/README.md) 和 [开发进度](docs/progress.md)。
 
 ## 当前可用
 

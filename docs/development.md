@@ -57,6 +57,8 @@
 
 每次端到端测试创建独立数据目录。模拟模型在测试脚本中明确返回固定结果，用于核对协议、任务和版本流程，不是生产 AI 功能的替代实现。
 
+推送到 GitHub 后，Actions 按 `.github/workflows/ci.yml` 在 Ubuntu / Node.js 24 上并行运行两组任务：类型检查、格式检查、单元测试与构建；安装 Chromium 后运行浏览器端到端流程。失败时保留 Playwright 报告与截图，可在仓库的 Actions 页面下载。
+
 ## 4. 当前 HTTP 入口
 
 `/api/v1/*` 与 `/api/*` 等价；对外集成使用 `/api/v1` 与 Bearer 访问令牌，`GET /api/v1/openapi.json` 为接口文档，`POST /api/mcp` 为 MCP（JSON-RPC）。下表为工作台主要入口。
