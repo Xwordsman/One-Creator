@@ -1,4 +1,4 @@
-import { mkdtemp, readFile, rm } from 'node:fs/promises';
+import { mkdir, mkdtemp, readFile, rm } from 'node:fs/promises';
 import { execFileSync } from 'node:child_process';
 import { createRequire } from 'node:module';
 import path from 'node:path';
@@ -513,7 +513,9 @@ test('媒体：配置服务、转写、生成脚本、真实 FFmpeg 合成视频
   // Real media files made by the bundled FFmpeg: a 3-second clip with sound, and a voice-over track.
   const require = createRequire(import.meta.url);
   const ffmpeg = require('ffmpeg-static') as string;
-  const folder = await mkdtemp(path.resolve('.data/test-temp/e2e-media-'));
+  const tempRoot = path.resolve('.data/test-temp');
+  await mkdir(tempRoot, { recursive: true });
+  const folder = await mkdtemp(path.join(tempRoot, 'e2e-media-'));
   const run = (args: string[]) =>
     execFileSync(ffmpeg, ['-hide_banner', '-loglevel', 'error', '-y', ...args], {
       cwd: folder,
