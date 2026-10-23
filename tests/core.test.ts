@@ -1,5 +1,10 @@
 import { describe, expect, it } from 'vitest';
-import { platformRulesVersion, validateDocument } from '@one-creator/core';
+import {
+  allowedBrowserUrl,
+  browserProfiles,
+  platformRulesVersion,
+  validateDocument,
+} from '@one-creator/core';
 
 const base = { body: '正文内容', assetIds: [] as string[], coverAssetId: null };
 describe('平台字段检查', () => {
@@ -34,5 +39,15 @@ describe('平台字段检查', () => {
       validateDocument({ ...base, title: ' ', body: '' }, 'toutiao').map((issue) => issue.severity),
     ).toEqual(['error', 'error']);
     expect(platformRulesVersion).toMatch(/^\d{4}-\d{2}-\d{2}$/);
+  });
+});
+describe('浏览器平台入口', () => {
+  it('B 站视频在视频稿件管理页核对，且只允许平台域名', () => {
+    expect(browserProfiles.bilibili.publishUrl).toContain('/upload/video/frame');
+    expect(browserProfiles.bilibili.listUrl).toBe(
+      'https://member.bilibili.com/platform/upload-manager/video',
+    );
+    expect(allowedBrowserUrl('bilibili', browserProfiles.bilibili.listUrl)).toBe(true);
+    expect(allowedBrowserUrl('bilibili', 'https://example.com/video/BV1')).toBe(false);
   });
 });

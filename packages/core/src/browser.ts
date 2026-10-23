@@ -70,7 +70,7 @@ export const browserProfiles = {
     ],
     loginUrl: 'https://passport.bilibili.com/login',
     publishUrl: 'https://member.bilibili.com/platform/upload/video/frame',
-    listUrl: 'https://member.bilibili.com/platform/upload-manager/article',
+    listUrl: 'https://member.bilibili.com/platform/upload-manager/video',
     title: 'input[placeholder*="标题"], .video-title input, [data-testid="title"]',
     editor: '[contenteditable="true"], textarea[placeholder*="简介"], [data-testid="editor"]',
     upload: 'input[type="file"][accept*="video"], input[type="file"]',
