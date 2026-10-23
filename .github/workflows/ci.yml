@@ -27,6 +27,8 @@ jobs:
       - run: npm ci
       - run: npm run check
       - run: npm run format:check
+      # tests/nodes.test.ts starts a real executor and drives a real browser.
+      - run: npx playwright install --with-deps chromium
       - run: npm test
       - run: npm run build
 
@@ -44,7 +46,20 @@ jobs:
       - run: npx playwright install --with-deps chromium
       # The preview server serves the built apps/web/dist, so build before testing.
       - run: npm run build
-      - run: npm run test:e2e
+      - name: 运行浏览器端到端流程
+        run: |
+          set -o pipefail
+          npm run test:e2e 2>&1 | tee e2e.log
+      # Workflow logs need a signed-in account; the step summary is public and carries the failure text.
+      - if: failure()
+        name: 输出失败摘要
+        run: |
+          {
+            echo '### 浏览器端到端流程失败'
+            echo '```text'
+            tail -n 200 e2e.log 2>/dev/null || echo '没有捕获到输出'
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
       - if: failure()
         uses: actions/upload-artifact@v4
         with:
@@ -52,4 +67,5 @@ jobs:
           path: |
             playwright-report/
             test-results/
+            e2e.log
           retention-days: 7
