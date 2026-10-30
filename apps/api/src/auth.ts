@@ -15,7 +15,7 @@ const credentials = z.object({
     .max(40)
     .regex(/^[a-zA-Z0-9_.-]+$/)
     .transform((value) => value.toLowerCase()),
-  password: z.string().min(10).max(200),
+  password: z.string().trim().min(10).max(200),
 });
 const cookieName = 'one_creator_session';
 export async function findSession(sql: Sql, request: FastifyRequest): Promise<SessionUser | null> {

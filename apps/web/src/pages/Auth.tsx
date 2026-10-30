@@ -19,7 +19,7 @@ export default function Auth({ bootstrap }: { bootstrap: Bootstrap }) {
     try {
       await api(setup ? '/auth/setup' : '/auth/login', 'POST', {
         username: text(data, 'username'),
-        password: String(data.get('password') ?? ''),
+        password: String(data.get('password') ?? '').trim(),
         ...(setup ? { name: text(data, 'name'), workspaceName: text(data, 'workspaceName') } : {}),
       });
       await client.invalidateQueries({ queryKey: ['bootstrap'] });

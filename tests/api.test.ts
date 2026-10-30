@@ -182,6 +182,13 @@ describe('初始化与访问边界', () => {
         .statusCode,
     ).toBe(401);
   });
+  it('登录时忽略密码前后空白', async () => {
+    const login = await request('POST', '/api/auth/login', {
+      username: 'creator',
+      password: '  Creator-Password-2026  ',
+    });
+    expect(login.statusCode).toBe(200);
+  });
   it('拒绝跨来源写入，并使退出后的会话失效', async () => {
     expect(
       (

@@ -10,4 +10,5 @@ test-results/
 *.log
 *.tsbuildinfo
 backups/
+.openchamber/
 .DS_Store
